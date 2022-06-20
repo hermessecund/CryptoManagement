@@ -29,7 +29,7 @@ class PortfolioTest < Minitest::Test
         requestedCoin = @portfolio.GetCoinByName(@memeCoin.name)
 
         assert_equal 1, @portfolio.GetNumCoins
-        assert_equal "memeCoin", requestedCoin.name
+        assert_equal "memecoin", requestedCoin.name
         assert_equal "MMC", requestedCoin.abbreviation
     end
 
@@ -46,7 +46,7 @@ class PortfolioTest < Minitest::Test
         requestedCoin = @portfolio.GetCoin(@memeCoin)
         
         refute_nil requestedCoin
-        assert_equal "memeCoin", requestedCoin.name
+        assert_equal "memecoin", requestedCoin.name
         assert_equal "MMC", requestedCoin.abbreviation
     end
 
@@ -65,7 +65,7 @@ class PortfolioTest < Minitest::Test
         deletedCoin = @portfolio.DeleteCoin(@memeCoin)
         
         assert_equal 1, @portfolio.GetNumCoins
-        assert_equal "memeCoin", deletedCoin.name
+        assert_equal "memecoin", deletedCoin.name
         assert_equal "MMC", deletedCoin.abbreviation
     end
 

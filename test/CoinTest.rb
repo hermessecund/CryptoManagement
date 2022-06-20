@@ -4,6 +4,7 @@ require "date"
 require_relative "../src/Coin.rb"
 require_relative "../src/Operation.rb"
 require_relative "../src/OperationType.rb"
+require 'coingecko_ruby'
 
 
 class CoinTest < Minitest::Test
@@ -11,6 +12,7 @@ class CoinTest < Minitest::Test
     def setup
         @antonioCoin = Coin.new("AntonioCoin", "ANC")
         @antonioCoin2 = Coin.new("AntonioCoin2", "ANC")
+        @bitcoin = Coin.new("Bitcoin", "BTC")
         @buyOperation = Operation.new(1.2, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
         @buyOperation2 = Operation.new(1.3, 30, 600, OperationType::BUY, 3, 'BUY AntonioCoin2', DateTime.now())
         @sellOperation = Operation.new(1.3, 30, 100, OperationType::SELL, 3, 'SELL AntonioCoin2', DateTime.now())
@@ -82,5 +84,17 @@ class CoinTest < Minitest::Test
         expendAmount = @antonioCoin.GetTotalExpend
 
         assert_equal 0, expendAmount
+    end
+
+    def test_GetCurrentPrice_AssetExist_PriceReturned
+        price = @bitcoin.GetCurrentPrice
+
+        assert_operator price, :>, 0
+    end
+
+    def test_GetCurrentPrice_AssetDoesNotExist_NoPriceReturned
+        price = @antonioCoin.GetCurrentPrice
+
+        assert_nil price
     end
 end

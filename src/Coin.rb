@@ -1,12 +1,13 @@
 require_relative "Operation.rb"
 require_relative "OperationType.rb"
+require 'coingecko_ruby'
 
 class Coin
     attr_reader :name, :abbreviation, :operations
     
     def initialize(name, abbreviation)
-        @name = name
-        @abbreviation = abbreviation
+        @name = name.downcase
+        @abbreviation = abbreviation.upcase
         @operations = Array.new
     end
 
@@ -41,6 +42,11 @@ class Coin
         sellAmount = self.GetTotalMoneyFromOperationType(OperationType::SELL) == nil ? 0 : self.GetTotalMoneyFromOperationType(OperationType::SELL)
 
         return buyAmount - sellAmount
+    end
+
+    def GetCurrentPrice
+        client = CoingeckoRuby::Client.new
+        return client.price(@name.downcase)[@name] == nil ? nil : client.price(@name.downcase)[@name]["usd"]
     end
 
     def GetTotalMoneyFromOperationType(type)
