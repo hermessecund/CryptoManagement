@@ -10,6 +10,10 @@ class Portfolio
         @coins.push(coin)
     end
 
+    def GetCoin(coin)
+        return @coins.include?(coin) ? @coins.at(@coins.find_index(coin)) : nil
+    end
+
     def GetCoinByName(name)
         found = false
 		coin = nil
