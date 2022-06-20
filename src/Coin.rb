@@ -1,3 +1,6 @@
+require_relative "Operation.rb"
+require_relative "OperationType.rb"
+
 class Coin
     attr_reader :name, :abbreviation, :operations
     
@@ -27,9 +30,29 @@ class Coin
         if(self.GetNumOperations != 0)
             addition = 0.0;
 
-            @operations.each {|x| addition += x.usdAmount}
+            @operations.each { |x| addition += x.usdAmount }
     
             return addition / self.GetNumOperations
         end
     end
+
+    def GetTotalExpend
+        buyAmount = self.GetTotalMoneyFromOperationType(OperationType::BUY) == nil ? 0 : self.GetTotalMoneyFromOperationType(OperationType::BUY)
+        sellAmount = self.GetTotalMoneyFromOperationType(OperationType::SELL) == nil ? 0 : self.GetTotalMoneyFromOperationType(OperationType::SELL)
+
+        return buyAmount - sellAmount
+    end
+
+    def GetTotalMoneyFromOperationType(type)
+        if(self.GetNumOperations != 0)
+            addition = 0.0;
+
+            buys = @operations.select { |x| x.type == type}
+            buys.each { |y| addition += y.usdAmount }
+
+            return addition
+        end
+    end
+
+    private :GetTotalMoneyFromOperationType
 end
