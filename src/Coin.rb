@@ -11,6 +11,10 @@ class Coin
         @operations.push(operation)
     end
 
+    def DeleteOperation(operation)
+        @operations.delete(operation)
+    end
+
     def GetNumOperations()
         return @operations.length
     end
