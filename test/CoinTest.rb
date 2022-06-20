@@ -13,9 +13,9 @@ class CoinTest < Minitest::Test
         @antonioCoin = Coin.new("AntonioCoin", "ANC")
         @antonioCoin2 = Coin.new("AntonioCoin2", "ANC")
         @bitcoin = Coin.new("Bitcoin", "BTC")
-        @buyOperation = Operation.new(1.2, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
-        @buyOperation2 = Operation.new(1.3, 30, 600, OperationType::BUY, 3, 'BUY AntonioCoin2', DateTime.now())
-        @sellOperation = Operation.new(1.3, 30, 100, OperationType::SELL, 3, 'SELL AntonioCoin2', DateTime.now())
+        @buyOperation = Operation.new(20, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
+        @buyOperation2 = Operation.new(10, 20, 600, OperationType::BUY, 3, 'BUY AntonioCoin2', DateTime.now())
+        @sellOperation = Operation.new(5, 5, 100, OperationType::SELL, 3, 'SELL AntonioCoin2', DateTime.now())
     end
 
 
@@ -53,13 +53,29 @@ class CoinTest < Minitest::Test
         assert_nil operation
     end
 
+    def test_GetTotalUnits_SomeOperations_TotalUnitsReturned
+        @antonioCoin.AddOperation(@buyOperation)
+        @antonioCoin.AddOperation(@buyOperation2)
+        @antonioCoin.AddOperation(@sellOperation)
+        
+        units = @antonioCoin.GetTotalUnits
+
+        assert_equal 25, units
+    end
+
+    def test_GetTotalUnits_NoOperations_NoUnitsReturned
+        units = @antonioCoin.GetTotalUnits
+
+        assert_nil units
+    end
+
     def test_GetAverageBuyPrice_TwoOperationsExists_AveragePriceReturned
         @antonioCoin.AddOperation(@buyOperation)
         @antonioCoin.AddOperation(@buyOperation2)
         
         average = @antonioCoin.GetAverageBuyPrice
 
-        assert_equal 400, average
+        assert_equal 13.333333333333334, average
     end
 
     def test_GetAverageBuyPrice_NoOperationsExists_NilReturned
