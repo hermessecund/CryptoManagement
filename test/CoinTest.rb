@@ -3,13 +3,14 @@ require "minitest/mock"
 require "date"
 require_relative "../src/Coin.rb"
 require_relative "../src/Operation.rb"
+require_relative "../src/OperationType.rb"
 
 
 class CoinTest < Minitest::Test
 
     def setup
         @antonioCoin = Coin.new("AntonioCoin", "ANC")
-        @operation = Operation.new(1.2, 10, 200, 'BUY', 1, 'BUY AntonioCoin', DateTime.now())
+        @operation = Operation.new(1.2, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
     end
 
 
