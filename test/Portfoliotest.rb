@@ -59,4 +59,23 @@ class PortfolioTest < Minitest::Test
         assert_nil requestedCoin
     end
 
+    def test_DeleteCoin_TwoCoinsInPortfolio_DeletedOneCoin
+        @portfolio.AddCoin(@memeCoin)
+        @portfolio.AddCoin(@antonioCoin)
+
+        deletedCoin = @portfolio.DeleteCoin(@memeCoin)
+        
+        assert_equal 1, @portfolio.GetNumCoins
+        assert_equal "memeCoin", deletedCoin.name
+        assert_equal "MMC", deletedCoin.abbreviation
+    end
+
+    def test_DeleteCoin_OneCoinInPortfolio_NoDeletedCoin
+        @portfolio.AddCoin(@antonioCoin)
+
+        deletedCoin = @portfolio.DeleteCoin(@memeCoin)
+        
+        assert_nil deletedCoin
+    end
+
 end

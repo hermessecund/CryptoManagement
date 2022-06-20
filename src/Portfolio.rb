@@ -14,6 +14,10 @@ class Portfolio
         return @coins.include?(coin) ? @coins.at(@coins.find_index(coin)) : nil
     end
 
+    def DeleteCoin(coin)
+        @coins.delete(coin)
+    end
+
     def GetCoinByName(name)
         found = false
 		coin = nil
