@@ -1,2 +1,2 @@
-Operation = Struct.new(:coinPrice, :coinUnits :usdAmount, :type, :fee, :note) do
+Operation = Struct.new(:coinPrice, :coinUnits, :usdAmount, :type, :fee, :note, :date) do
 end

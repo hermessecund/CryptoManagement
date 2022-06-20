@@ -7,4 +7,11 @@ class Coin
         @operations = Array.new
     end
 
+    def AddOperation(operation)
+        @operations.push(operation)
+    end
+
+    def GetNumOperations()
+        return @operations.length
+    end
 end
