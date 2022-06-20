@@ -15,6 +15,10 @@ class Coin
         @operations.delete(operation)
     end
 
+    def GetOperation(operation)
+        return @operations.include?(operation) ? @operations.at(@operations.find_index(operation)) : nil
+    end
+
     def GetNumOperations()
         return @operations.length
     end

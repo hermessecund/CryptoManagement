@@ -31,4 +31,22 @@ class CoinTest < Minitest::Test
 
         assert_equal 0, @antonioCoin.GetNumOperations
     end
+
+    def test_GetOperation_OperationExists_OperationReturned
+        @antonioCoin.AddOperation(@operation)
+        @antonioCoin.AddOperation(@operation2)
+        
+        operation = @antonioCoin.GetOperation(@operation)
+
+        refute_nil operation
+        assert_equal 'BUY AntonioCoin', operation.note
+    end
+
+    def test_GetOperation_OperationNotExists_NoOperationReturned
+        @antonioCoin.AddOperation(@operation2)
+        
+        operation = @antonioCoin.GetOperation(@operation)
+
+        assert_nil operation
+    end
 end
