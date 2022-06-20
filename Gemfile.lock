@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    coingecko_ruby (0.4.2)
     minitest (5.15.0)
     rake (13.0.6)
 
@@ -8,6 +9,7 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  coingecko_ruby (~> 0.4.2)
   minitest (~> 5.15)
   rake (~> 13.0)
 
