@@ -2,7 +2,10 @@ require_relative "Coin.rb"
 
 class Portfolio
 
-    def initialize
+    attr_accessor :name
+
+    def initialize(name)
+        @name = name
         @coins = Array.new
     end
 

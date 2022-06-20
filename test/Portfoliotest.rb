@@ -8,11 +8,10 @@ require_relative "../src/Coin.rb"
 class PortfolioTest < Minitest::Test
 
     def setup
-        @portfolio = Portfolio.new()
+        @portfolio = Portfolio.new("NameTest")
         @antonioCoin = Coin.new("AntonioCoin", "ANC")
         @memeCoin = Coin.new("memeCoin", "MMC")
     end
-
 
     def test_GetNumCoins
         assert_equal 0, @portfolio.GetNumCoins
@@ -76,6 +75,14 @@ class PortfolioTest < Minitest::Test
         deletedCoin = @portfolio.DeleteCoin(@memeCoin)
         
         assert_nil deletedCoin
+    end
+
+    def test_SetName_OneCoinInPortfolio_NameChanged
+        @portfolio.AddCoin(@memeCoin)
+
+        @portfolio.name = "PortFolioTest"
+        
+        assert_equal "PortFolioTest", @portfolio.name
     end
 
 end
