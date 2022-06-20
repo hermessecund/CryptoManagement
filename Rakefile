@@ -1,7 +1,7 @@
 require "rake/testtask"
 
 task default: %w[install]
-task test: %w[UnitTestsPortFolioTest]
+task test: %w[UnitTestsPortFolio UnitTestsCoin]
 
 desc "Install all dependencies"
 task :install do
@@ -9,6 +9,11 @@ task :install do
 end
 
 Rake::TestTask.new do |t|
-	t.name = "UnitTestsPortFolioTest"
+	t.name = "UnitTestsPortFolio"
 	t.test_files = FileList['test/PortFolioTest.rb']
+end
+
+Rake::TestTask.new do |t|
+	t.name = "UnitTestsCoin"
+	t.test_files = FileList['test/CoinTest.rb']
 end
