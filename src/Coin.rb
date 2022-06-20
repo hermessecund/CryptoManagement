@@ -22,4 +22,14 @@ class Coin
     def GetNumOperations()
         return @operations.length
     end
+
+    def GetAverageBuyPrice
+        if(self.GetNumOperations != 0)
+            addition = 0.0;
+
+            @operations.each {|x| addition += x.usdAmount}
+    
+            return addition / self.GetNumOperations
+        end
+    end
 end
