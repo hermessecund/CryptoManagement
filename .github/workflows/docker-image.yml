@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  UnitTests:
 
     runs-on: ubuntu-latest
 

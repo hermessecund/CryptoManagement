@@ -1,6 +1,6 @@
 FROM ruby:3.1.2-alpine3.16
 
-LABEL version="1.0.1" maintainer="antculap@gmail.com"
+LABEL version="1.0.0" maintainer="antculap@gmail.com"
 
 RUN adduser -D antculap
 RUN apk update &&\
