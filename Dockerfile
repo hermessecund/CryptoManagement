@@ -27,4 +27,7 @@ RUN rm -r /home/antculap/Gemfile*
 
 WORKDIR /test
 
+RUN pwd
+RUN ls
+
 CMD ["rake","test"]
