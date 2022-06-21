@@ -23,11 +23,7 @@ RUN chmod a+w /home/antculap
 
 WORKDIR /home/antculap/
 RUN bundle install
-RUN rm -r /home/antculap/Gemfile*
 
-WORKDIR /test
-
-RUN pwd
-RUN ls
+WORKDIR /testdir
 
 CMD ["rake","test"]
