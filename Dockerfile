@@ -23,7 +23,6 @@ RUN chmod a+w /home/antculap
 
 WORKDIR /home/antculap/
 RUN bundle install
-
-WORKDIR /testdir
+COPY . . 
 
 CMD ["rake", "test"]
