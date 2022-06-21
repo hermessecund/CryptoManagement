@@ -12,11 +12,6 @@ RUN apk update &&\
     --virtual build-dependencies \
     build-base
 
-ENV GEM_HOME /usr/local/bundle
-ENV BUNDLE_APP_CONFIG="$GEM_HOME"
-ENV PATH $GEM_HOME/bin:$PATH
-RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
-
 COPY Gemfile Gemfile.lock /home/antculap/
 RUN chmod a+w /home/antculap/Gemfile.lock
 RUN chmod a+w /home/antculap
