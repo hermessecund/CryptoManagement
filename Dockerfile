@@ -26,4 +26,4 @@ RUN bundle install
 
 WORKDIR /testdir
 
-CMD ["ls", "test/"]
+CMD ["rake", "test"]
