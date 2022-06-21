@@ -10,7 +10,7 @@ end
 
 Rake::TestTask.new do |t|
 	t.name = "UnitTestsPortFolio"
-	t.test_files = FileList['test/PortfolioTest.rb']
+	t.test_files = FileList['test/Portfoliotest.rb']
 end
 
 Rake::TestTask.new do |t|
