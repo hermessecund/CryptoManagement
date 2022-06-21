@@ -5,8 +5,8 @@ LABEL version="1.0.1" maintainer="antculap@gmail.com"
 RUN adduser -D antculap
 RUN apk update &&\
     apk add --no-cache ruby \
-    ruby-bundler=2.1.4-r1 \
-    ruby-rake=2.7.1-r3 \
+    ruby-bundler \
+    ruby-rake \
     --update npm \
     curl \
     --virtual build-dependencies \
