@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag cryptoManagementImage:v1
+      run: docker build . --file Dockerfile --tag cryptoManagementImage:v1 .
 
     - name: Execute unit tests
       run: docker run -t -v `pwd`:/test ghcr.io/antoniocuadros/cryptoManagementImage:v1
