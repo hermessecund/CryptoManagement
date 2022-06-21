@@ -72,8 +72,8 @@ class Coin
         return client.price(@name.downcase)[@name] == nil ? nil : client.price(@name.downcase)[@name]["usd"]
     end
 
-    def GetTotalMoneyIn
-
+    def GetActualTotalMoney
+        return self.GetCurrentPrice * self.GetTotalUnits
     end
 
     def GetTotalMoneyFromOperationType(type)
