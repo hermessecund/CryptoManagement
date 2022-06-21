@@ -4,7 +4,6 @@ require "date"
 require_relative "../src/Portfolio.rb"
 require_relative "../src/Coin.rb"
 
-
 class PortfolioTest < Minitest::Test
 
     def setup
