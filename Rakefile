@@ -1,7 +1,7 @@
 require "rake/testtask"
 
 task default: %w[install]
-task test: %w[UnitTestsPortFolio UnitTestsCoin]
+task test: %w[UnitTestsPortFolio UnitTestsCoin UnitTestsPortfolioManager]
 
 desc "Install all dependencies"
 task :install do
