@@ -1,13 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-
-require "minitest/autorun"
-require "minitest/mock"
-require "date"
+require_relative "test_helper"
 require_relative "../src/Coin.rb"
-require_relative "../src/Operation.rb"
-require_relative "../src/OperationType.rb"
-require 'coingecko_ruby'
 
 
 class CoinTest < Minitest::Test

@@ -1,4 +1,5 @@
 require_relative "Coin.rb"
+require_relative "User.rb"
 
 class Portfolio
 

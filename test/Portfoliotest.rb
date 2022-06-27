@@ -1,9 +1,5 @@
-require "minitest/autorun"
-require "minitest/mock"
-require "date"
+require_relative "test_helper"
 require_relative "../src/Portfolio.rb"
-require_relative "../src/Coin.rb"
-require_relative "../src/User.rb"
 
 class PortfolioTest < Minitest::Test
 
