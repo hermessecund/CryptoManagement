@@ -10,8 +10,14 @@ class PortfolioManager
         @portfolios.push(portfolio)
     end
 
-    def GetPortfolio(portfolio)
-        return @portfolios.include?(portfolio) ? @portfolios.at(@portfolios.find_index(portfolio)) : nil
+    def GetPortfolio(portfolio, user)
+        portfolio = @portfolios.include?(portfolio) ? @portfolios.at(@portfolios.find_index(portfolio)) : nil
+
+        if(portfolio != nil and portfolio.user != user)
+            portfolio = nil
+        end
+
+        return portfolio
     end
 
     def GetNumPortfolios

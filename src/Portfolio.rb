@@ -2,7 +2,7 @@ require_relative "Coin.rb"
 
 class Portfolio
 
-    attr_accessor :name
+    attr_accessor :name, :user
 
     def initialize(name, user)
         @name = name
