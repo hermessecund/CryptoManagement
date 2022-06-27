@@ -2,6 +2,7 @@ require "minitest/autorun"
 require "minitest/mock"
 require_relative "../src/PortfolioManager.rb"
 require_relative "../src/Portfolio.rb"
+require_relative "../src/User.rb"
 
 class PortfolioManagerTest < Minitest::Test
 
@@ -15,21 +16,21 @@ class PortfolioManagerTest < Minitest::Test
         @portfolioManager.AddPortfolio(@portfolio)
 
         assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio).name
+        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio, User.new("username", "password")).name
     end
 
     def test_GetPortfolio_PortfolioExists_PortfolioReturned
         @portfolioManager.AddPortfolio(@portfolio)
 
         assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio).name
+        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio, User.new("username", "password")).name
     end
 
     def test_GetPortfolio_PortfolioDoesNotExist_NilReturned
         @portfolioManager.AddPortfolio(@portfolio)
 
         assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_nil @portfolioManager.GetPortfolio(@portfolio2)
+        assert_nil @portfolioManager.GetPortfolio(@portfolio2, User.new("username", "password"))
     end
 
     def test_DeletePortfolio_PortfolioExists_PortfolioRemoved
@@ -39,7 +40,7 @@ class PortfolioManagerTest < Minitest::Test
         @portfolioManager.DeletePortfolio(@portfolio)
 
         assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "anotherPortfolio", @portfolioManager.GetPortfolio(@portfolio2).name
+        assert_equal "anotherPortfolio", @portfolioManager.GetPortfolio(@portfolio2, User.new("username", "password")).name
     end
 
     def test_DeletePortfolio_PortfolioDoesNotExists_PortfolioNotRemoved
