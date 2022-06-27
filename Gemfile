@@ -11,3 +11,5 @@ gem "minitest", "~> 5.15"
 gem "coingecko_ruby", "~> 0.4.2"
 
 gem "bcrypt", "~> 3.1"
+
+gem 'simplecov', require: false, group: :test

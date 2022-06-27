@@ -3,8 +3,15 @@ GEM
   specs:
     bcrypt (3.1.18)
     coingecko_ruby (0.4.2)
+    docile (1.4.0)
     minitest (5.15.0)
     rake (13.0.6)
+    simplecov (0.21.2)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
 
 PLATFORMS
   arm64-darwin-21
@@ -14,6 +21,7 @@ DEPENDENCIES
   coingecko_ruby (~> 0.4.2)
   minitest (~> 5.15)
   rake (~> 13.0)
+  simplecov
 
 BUNDLED WITH
    2.3.15
