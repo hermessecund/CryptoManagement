@@ -3,11 +3,13 @@ require "minitest/mock"
 require "date"
 require_relative "../src/Portfolio.rb"
 require_relative "../src/Coin.rb"
+require_relative "../src/User.rb"
 
 class PortfolioTest < Minitest::Test
 
     def setup
-        @portfolio = Portfolio.new("NameTest")
+
+        @portfolio = Portfolio.new("NameTest", User.new("username", "password"))
         @antonioCoin = Coin.new("AntonioCoin", "ANC")
         @memeCoin = Coin.new("memeCoin", "MMC")
     end

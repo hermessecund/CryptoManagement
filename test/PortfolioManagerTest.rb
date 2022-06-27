@@ -7,8 +7,8 @@ class PortfolioManagerTest < Minitest::Test
 
     def setup
         @portfolioManager = PortfolioManager.new()
-        @portfolio = Portfolio.new("onePortfolio")
-        @portfolio2 = Portfolio.new("anotherPortfolio")
+        @portfolio = Portfolio.new("onePortfolio", User.new("username", "password"))
+        @portfolio2 = Portfolio.new("anotherPortfolio", User.new("username", "password"))
     end
 
     def test_AddPortfolio
