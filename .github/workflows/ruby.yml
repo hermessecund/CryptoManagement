@@ -1,0 +1,23 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.8
+          bundler-cache: true
+      - name: Unit tests and coverage report
+        run: bundle exec rspec --format doc
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
