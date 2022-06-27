@@ -1,13 +1,17 @@
 name: Code Coverage
+
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build:
-    steps:
-      - name: Test
-        run: rake test
 
-      - name: Simplecov Report
-        uses: aki77/simplecov-report-action@v1
+  CodeCoverage:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: aki77/simplecov-report-action@v1
+    - name: Simplecov Report
