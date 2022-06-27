@@ -1,9 +1,11 @@
-class User
+require 'bcrypt'
 
+class User
+    include BCrypt
+    
     def initialize(userName, password)
         @userName = userName
-        @password = password
+        @password = BCrypt::Password.create(password)
     end
-
 
 end
