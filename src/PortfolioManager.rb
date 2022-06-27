@@ -1,4 +1,4 @@
-require_relative "Coin.rb"
+require_relative "Portfolio.rb"
 
 class PortfolioManager
     
