@@ -1,0 +1,12 @@
+name: Tests
+on:
+  pull_request:
+
+jobs:
+  build:
+    steps:
+      - name: Test
+        run: rake test
+
+      - name: Simplecov Report
+        uses: aki77/simplecov-report-action@v1
