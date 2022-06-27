@@ -32,5 +32,21 @@ class PortfolioManagerTest < Minitest::Test
         assert_nil @portfolioManager.GetPortfolio(@portfolio2)
     end
 
-    
+    def test_DeletePortfolio_PortfolioExists_PortfolioRemoved
+        @portfolioManager.AddPortfolio(@portfolio)
+        @portfolioManager.AddPortfolio(@portfolio2)
+
+        @portfolioManager.DeletePortfolio(@portfolio)
+
+        assert_equal 1, @portfolioManager.GetNumPortfolios
+        assert_equal "anotherPortfolio", @portfolioManager.GetPortfolio(@portfolio2).name
+    end
+
+    def test_DeletePortfolio_PortfolioDoesNotExists_PortfolioNotRemoved
+        @portfolioManager.AddPortfolio(@portfolio2)
+
+        @portfolioManager.DeletePortfolio(@portfolio)
+
+        assert_equal 1, @portfolioManager.GetNumPortfolios
+    end
 end

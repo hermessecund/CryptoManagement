@@ -17,4 +17,8 @@ class PortfolioManager
     def GetNumPortfolios
         return @portfolios.length
     end
+
+    def DeletePortfolio(portfolio)
+        @portfolios.delete(portfolio)
+    end
 end
