@@ -1,0 +1,5 @@
+DCA
+cryptocurrency
+Rbenv
+Minitest
+Bundler
