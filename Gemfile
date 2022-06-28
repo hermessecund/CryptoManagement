@@ -12,4 +12,6 @@ gem "coingecko_ruby", "~> 0.4.2"
 
 gem "bcrypt", "~> 3.1"
 
-gem 'simplecov', require: false, group: :test
+group :test do
+  gem "simplecov", "~> 0.21.2"
+end

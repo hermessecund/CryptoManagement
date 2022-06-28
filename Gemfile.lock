@@ -14,6 +14,7 @@ GEM
     simplecov_json_formatter (0.1.4)
 
 PLATFORMS
+  aarch64-linux-musl
   arm64-darwin-21
 
 DEPENDENCIES
@@ -21,7 +22,7 @@ DEPENDENCIES
   coingecko_ruby (~> 0.4.2)
   minitest (~> 5.15)
   rake (~> 13.0)
-  simplecov
+  simplecov (~> 0.21.2)
 
 BUNDLED WITH
    2.3.15

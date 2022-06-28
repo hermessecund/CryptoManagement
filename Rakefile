@@ -1,7 +1,13 @@
 require "rake/testtask"
 
 task default: %w[install]
-task test: %w[UnitTestsPortFolio UnitTestsCoin UnitTestsPortfolioManager]
+
+task :test do
+	ENV["COVERAGE"]='FALSE'
+	Rake::Task["UnitTestsPortFolio"].invoke
+	Rake::Task["UnitTestsCoin"].invoke
+	Rake::Task["UnitTestsPortfolioManager"].invoke
+end
 
 desc "Install all dependencies"
 task :install do
@@ -9,8 +15,14 @@ task :install do
 end
 
 Rake::TestTask.new do |t|
+	ENV["COVERAGE"]='TRUE'
+	t.name = "coverage"
+	t.pattern = "test/**/*Test.rb"     # This expects your tests to be inside a test subfolder
+end 
+
+Rake::TestTask.new do |t|
 	t.name = "UnitTestsPortFolio"
-	t.test_files = FileList['test/Portfoliotest.rb']
+	t.test_files = FileList['test/PortfolioTest.rb']
 end
 
 Rake::TestTask.new do |t|

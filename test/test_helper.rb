@@ -1,5 +1,6 @@
-require 'simplecov'
-SimpleCov.start
+if(ENV["COVERAGE"]=='TRUE')
+    require 'simplecov' 
+end
 
 require "minitest/autorun"
 require "minitest/mock"
