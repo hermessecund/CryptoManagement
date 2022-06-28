@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Code Coverage
 
 on:
   push:
@@ -17,5 +17,5 @@ jobs:
     - name: Build the Docker image
       run: docker build -t cryptomanagement:v1 .
 
-    - name: Execute unit tests
-      run: docker run -it -v `pwd`:/testdir cryptomanagement:v1 rake coverage
+    - name: Execute code coverage
+      run: docker run -i -v `pwd`:/testdir cryptomanagement:v1 rake coverage
