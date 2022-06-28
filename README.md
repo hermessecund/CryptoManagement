@@ -2,7 +2,7 @@
 
 [![Unit Tests](https://github.com/antoniocuadros/CryptoManagement/actions/workflows/unit-tests.yml/badge.svg?event=push)](https://github.com/antoniocuadros/CryptoManagement/actions/workflows/unit-tests.yml)
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=antoniocuadros_CryptoManagement)
+[![Code Coverage](https://github.com/antoniocuadros/CryptoManagement/actions/workflows/coverage.yml/badge.svg)](https://github.com/antoniocuadros/CryptoManagement/actions/workflows/coverage.yml)
 
 ## Description
 This application aims to manage all your cryptocurrency-related assets in one place. It will allow you to know which ones you own, amount, profit/loss and even create DCA strategies.
