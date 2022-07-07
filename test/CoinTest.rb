@@ -1,111 +1,108 @@
-require_relative "test_helper"
-require_relative "../src/Coin.rb"
+# frozen_string_literal: true
 
+require_relative 'test_helper'
+require_relative '../src/Coin'
 
 class CoinTest < Minitest::Test
+  def setup
+      @antonioCoin = Coin.new("AntonioCoin", "ANC")
+      @antonioCoin2 = Coin.new("AntonioCoin2", "ANC")
+      @bitcoin = Coin.new("Bitcoin", "BTC")
+      @buyOperation = Operation.new(20, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
+      @buyOperation2 = Operation.new(10, 20, 600, OperationType::BUY, 3, 'BUY AntonioCoin2', DateTime.now())
+      @sellOperation = Operation.new(5, 5, 100, OperationType::SELL, 3, 'SELL AntonioCoin2', DateTime.now())
+  end
 
-    def setup
-        @antonioCoin = Coin.new("AntonioCoin", "ANC")
-        @antonioCoin2 = Coin.new("AntonioCoin2", "ANC")
-        @bitcoin = Coin.new("Bitcoin", "BTC")
-        @buyOperation = Operation.new(20, 10, 200, OperationType::BUY, 1, 'BUY AntonioCoin', DateTime.now())
-        @buyOperation2 = Operation.new(10, 20, 600, OperationType::BUY, 3, 'BUY AntonioCoin2', DateTime.now())
-        @sellOperation = Operation.new(5, 5, 100, OperationType::SELL, 3, 'SELL AntonioCoin2', DateTime.now())
-    end
+  def test_num_operations
+    assert_equal 0, @antonioCoin.num_operations
+  end
 
+  def test_add_operation
+    @antonioCoin.add_operation(@buyOperation)
 
-    def test_GetNumOperations
-        assert_equal 0, @antonioCoin.GetNumOperations
-    end
+    assert_equal 1, @antonioCoin.num_operations
+  end
 
-    def test_AddOperation
-        @antonioCoin.AddOperation(@buyOperation)
-        
-        assert_equal 1, @antonioCoin.GetNumOperations
-    end
+  def test_delete_operation
+    @antonioCoin.delete_operation(@buyOperation)
 
-    def test_DeleteOperation
-        @antonioCoin.DeleteOperation(@buyOperation)
+    assert_equal 0, @antonioCoin.num_operations
+  end
 
-        assert_equal 0, @antonioCoin.GetNumOperations
-    end
+  def test_operation_operation_exists_operation_returned
+    @antonioCoin.add_operation(@buyOperation)
+    @antonioCoin.add_operation(@buyOperation2)
 
-    def test_GetOperation_OperationExists_OperationReturned
-        @antonioCoin.AddOperation(@buyOperation)
-        @antonioCoin.AddOperation(@buyOperation2)
-        
-        operation = @antonioCoin.GetOperation(@buyOperation)
+    operation = @antonioCoin.operation(@buyOperation)
 
-        refute_nil operation
-        assert_equal 'BUY AntonioCoin', operation.note
-    end
+    refute_nil operation
+    assert_equal 'BUY AntonioCoin', operation.note
+  end
 
-    def test_GetOperation_OperationNotExists_NoOperationReturned
-        @antonioCoin.AddOperation(@buyOperation2)
-        
-        operation = @antonioCoin.GetOperation(@buyOperation)
+  def test_operation_operation_not_exists_no_operation_returned
+    @antonioCoin.add_operation(@buyOperation2)
 
-        assert_nil operation
-    end
+    operation = @antonioCoin.operation(@buyOperation)
 
-    def test_GetTotalUnits_SomeOperations_TotalUnitsReturned
-        @antonioCoin.AddOperation(@buyOperation)
-        @antonioCoin.AddOperation(@buyOperation2)
-        @antonioCoin.AddOperation(@sellOperation)
-        
-        units = @antonioCoin.GetTotalUnits
+    assert_nil operation
+  end
 
-        assert_equal 25, units
-    end
+  def test_total_units_some_operations_total_unit_returned
+    @antonioCoin.add_operation(@buyOperation)
+    @antonioCoin.add_operation(@buyOperation2)
+    @antonioCoin.add_operation(@sellOperation)
 
-    def test_GetTotalUnits_NoOperations_NoUnitsReturned
-        units = @antonioCoin.GetTotalUnits
+    units = @antonioCoin.total_units
 
-        assert_nil units
-    end
+    assert_equal 25, units
+  end
 
-    def test_GetAverageBuyPrice_TwoOperationsExists_AveragePriceReturned
-        @antonioCoin.AddOperation(@buyOperation)
-        @antonioCoin.AddOperation(@buyOperation2)
-        
-        average = @antonioCoin.GetAverageBuyPrice
+  def test_total_units_no_operations_no_units_returned
+    units = @antonioCoin.total_units
 
-        assert_equal 13.333333333333334, average
-    end
+    assert_nil units
+  end
 
-    def test_GetAverageBuyPrice_NoOperationsExists_NilReturned
-        
-        average = @antonioCoin.GetAverageBuyPrice
+  def test_average_buy_price_two_operations_exists_average_price_returned
+    @antonioCoin.add_operation(@buyOperation)
+    @antonioCoin.add_operation(@buyOperation2)
 
-        assert_nil average
-    end
+    average = @antonioCoin.average_buy_price
 
-    def test_GetTotalExpend_OperationsExists_TotalExpendReturned
-        @antonioCoin.AddOperation(@buyOperation)
-        @antonioCoin.AddOperation(@buyOperation2)
-        @antonioCoin.AddOperation(@sellOperation)
-        
-        expendAmount = @antonioCoin.GetTotalExpend
+    assert_equal 13.333333333333334, average
+  end
 
-        assert_equal 700, expendAmount
-    end
+  def test_average_buy_price_no_operation_exists_nil_returned
+    average = @antonioCoin.average_buy_price
 
-    def test_GetTotalExpend_NoOperationsExists_NoTotalExpendReturned
-        
-        expendAmount = @antonioCoin.GetTotalExpend
+    assert_nil average
+  end
 
-        assert_equal 0, expendAmount
-    end
+  def test_total_expend_operations_exists_total_expend_returned
+    @antonioCoin.add_operation(@buyOperation)
+    @antonioCoin.add_operation(@buyOperation2)
+    @antonioCoin.add_operation(@sellOperation)
 
-    def test_GetCurrentPrice_AssetExist_PriceReturned
-        price = @bitcoin.GetCurrentPrice
+    expended_amount = @antonioCoin.total_expend
 
-        assert_operator price, :>, 0
-    end
+    assert_equal 700, expended_amount
+  end
 
-    def test_GetCurrentPrice_AssetDoesNotExist_NoPriceReturned
-        price = @antonioCoin.GetCurrentPrice
+  def test_total_expend_no_operations_exists_no_total_expend_returned
+    expended_amount = @antonioCoin.total_expend
 
-        assert_nil price
-    end
+    assert_equal 0, expended_amount
+  end
+
+  def test_current_price_asset_exists_price_returned
+    price = @bitcoin.current_price
+
+    assert_operator price, :>, 0
+  end
+
+  def test_current_price_asset_does_not_exist_no_price_returned
+    price = @antonioCoin.current_price
+
+    assert_nil price
+  end
 end

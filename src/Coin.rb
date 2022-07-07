@@ -1,91 +1,96 @@
-require_relative "Operation.rb"
-require_relative "OperationType.rb"
+# frozen_string_literal: true
+
+require_relative 'Operation'
+require_relative 'OperationType'
 require 'coingecko_ruby'
 
+# Represents an asset
 class Coin
-    attr_reader :name, :abbreviation, :operations
-    
-    def initialize(name, abbreviation)
-        @name = name.downcase
-        @abbreviation = abbreviation.upcase
-        @operations = Array.new
-    end
+  attr_reader :name, :abbreviation, :operations
 
-    def AddOperation(operation)
-        @operations.push(operation)
-    end
+  def initialize(name, abbreviation)
+    @name = name.downcase
+    @abbreviation = abbreviation.upcase
+    @operations = []
+  end
 
-    def DeleteOperation(operation)
-        @operations.delete(operation)
-    end
+  def add_operation(operation)
+    @operations.push(operation)
+  end
 
-    def GetOperation(operation)
-        return @operations.include?(operation) ? @operations.at(@operations.find_index(operation)) : nil
-    end
+  def delete_operation(operation)
+    @operations.delete(operation)
+  end
 
-    def GetNumOperations()
-        return @operations.length
-    end
+  def operation(operation)
+    @operations.include?(operation) ? @operations.at(@operations.find_index(operation)) : nil
+  end
 
-    def GetAverageBuyPrice
-        if(self.GetNumOperations != 0)
-            addition = 0.0;
-            i = 0
+  def num_operations
+    @operations.length
+  end
 
-            while i < @operations.length()																							#Si no es sigla, buscamos por nombre (nos han proporcionado nombre)
-                if(@operations[i].type == OperationType::BUY)
-                    addition += @operations[i].coinUnits * @operations[i].coinPrice
-                end
-                i +=1
-            end
-            
-            return addition / self.GetTotalUnits
+  def average_buy_price
+    if num_operations != 0
+
+      addition = 0.0
+      i = 0
+
+      while i < @operations.length
+        if @operations[i].type == OperationType::BUY
+          addition += @operations[i].coinUnits * @operations[i].coinPrice
         end
+        i += 1
+      end
+      addition / total_units
+    end
+  end
+
+  def total_units
+    addition = 0
+    i = 0
+
+    while i < @operations.length
+      if @operations[i].type == OperationType::BUY
+        addition += @operations[i].coinUnits
+      else
+        addition -= @operations[i].coinUnits
+      end
+      i += 1
     end
 
-    def GetTotalUnits
-        addition = 0
-        units = 0
-		i = 0
-		
-		while i < @operations.length()																							#Si no es sigla, buscamos por nombre (nos han proporcionado nombre)
-			if(@operations[i].type == OperationType::BUY)
-				addition += @operations[i].coinUnits
-            else
-                addition -= @operations[i].coinUnits
-            end
-			i +=1
-		end
+    addition != 0 ? addition : nil
+  end
 
-        return addition != 0 ? addition : nil
+  def total_expend
+    buy = total_money_from_operation_type(OperationType::BUY)
+    sell = total_money_from_operation_type(OperationType::SELL)
+    buy_amount = buy.nil? ? 0 : buy
+    sell_amount = sell.nil? ? 0 : sell
+
+    buy_amount - sell_amount
+  end
+
+  def current_price
+    client = CoingeckoRuby::Client.new
+
+    client.price(@name.downcase)[@name].nil? ? nil : client.price(@name.downcase)[@name]['usd']
+  end
+
+  def actual_total_money
+    current_price * total_units
+  end
+
+  def total_money_from_operation_type(type)
+    if num_operations != 0
+      addition = 0.0
+
+      buys = @operations.select { |x| x.type == type }
+      buys.each { |y| addition += y.usdAmount }
+
+      addition
     end
+  end
 
-    def GetTotalExpend
-        buyAmount = self.GetTotalMoneyFromOperationType(OperationType::BUY) == nil ? 0 : self.GetTotalMoneyFromOperationType(OperationType::BUY)
-        sellAmount = self.GetTotalMoneyFromOperationType(OperationType::SELL) == nil ? 0 : self.GetTotalMoneyFromOperationType(OperationType::SELL)
-
-        return buyAmount - sellAmount
-    end
-
-    def GetCurrentPrice
-        client = CoingeckoRuby::Client.new
-        return client.price(@name.downcase)[@name] == nil ? nil : client.price(@name.downcase)[@name]["usd"]
-    end
-
-    def GetActualTotalMoney
-        return self.GetCurrentPrice * self.GetTotalUnits
-    end
-
-    def GetTotalMoneyFromOperationType(type)
-        if(self.GetNumOperations != 0)
-            addition = 0.0;
-
-            buys = @operations.select { |x| x.type == type}
-            buys.each { |y| addition += y.usdAmount }
-
-            return addition
-        end
-    end
-
-    private :GetTotalMoneyFromOperationType
+  private :total_money_from_operation_type
 end
