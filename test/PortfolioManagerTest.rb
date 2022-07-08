@@ -1,50 +1,51 @@
-require_relative "test_helper"
-require_relative "../src/PortfolioManager.rb"
+# frozen_string_literal: true
+
+require_relative 'test_helper'
+require_relative '../src/PortfolioManager'
 
 class PortfolioManagerTest < Minitest::Test
+  def setup
+    @portfolio_manager = PortfolioManager.new()
+    @portfolio = Portfolio.new('one_portfolio', User.new('username', 'password'))
+    @portfolio2 = Portfolio.new('another_portfolio', User.new('username', 'password'))
+  end
 
-    def setup
-        @portfolioManager = PortfolioManager.new()
-        @portfolio = Portfolio.new("onePortfolio", User.new("username", "password"))
-        @portfolio2 = Portfolio.new("anotherPortfolio", User.new("username", "password"))
-    end
+  def test_add_portfolio
+    @portfolio_manager.add_portfolio(@portfolio)
 
-    def test_AddPortfolio
-        @portfolioManager.AddPortfolio(@portfolio)
+    assert_equal 1, @portfolio_manager.num_portfolios
+    assert_equal 'one_portfolio', @portfolio_manager.portfolio(@portfolio, User.new('username', 'password')).name
+  end
 
-        assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio, User.new("username", "password")).name
-    end
+  def test_portfolio_portfolio_exists_portfolio_returned
+    @portfolio_manager.add_portfolio(@portfolio)
 
-    def test_GetPortfolio_PortfolioExists_PortfolioReturned
-        @portfolioManager.AddPortfolio(@portfolio)
+    assert_equal 1, @portfolio_manager.num_portfolios
+    assert_equal 'one_portfolio', @portfolio_manager.portfolio(@portfolio, User.new('username', 'password')).name
+  end
 
-        assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "onePortfolio", @portfolioManager.GetPortfolio(@portfolio, User.new("username", "password")).name
-    end
+  def test_portfolio_portfolio_does_not_exist_nil_returned
+    @portfolio_manager.add_portfolio(@portfolio)
 
-    def test_GetPortfolio_PortfolioDoesNotExist_NilReturned
-        @portfolioManager.AddPortfolio(@portfolio)
+    assert_equal 1, @portfolio_manager.num_portfolios
+    assert_nil @portfolio_manager.portfolio(@portfolio2, User.new('username', 'password'))
+  end
 
-        assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_nil @portfolioManager.GetPortfolio(@portfolio2, User.new("username", "password"))
-    end
+  def test_delete_portfolio_portfolio_exists_portfolio_removed
+    @portfolio_manager.add_portfolio(@portfolio)
+    @portfolio_manager.add_portfolio(@portfolio2)
 
-    def test_DeletePortfolio_PortfolioExists_PortfolioRemoved
-        @portfolioManager.AddPortfolio(@portfolio)
-        @portfolioManager.AddPortfolio(@portfolio2)
+    @portfolio_manager.delete_portfolio(@portfolio)
 
-        @portfolioManager.DeletePortfolio(@portfolio)
+    assert_equal 1, @portfolio_manager.num_portfolios
+    assert_equal 'another_portfolio', @portfolio_manager.portfolio(@portfolio2, User.new('username', 'password')).name
+  end
 
-        assert_equal 1, @portfolioManager.GetNumPortfolios
-        assert_equal "anotherPortfolio", @portfolioManager.GetPortfolio(@portfolio2, User.new("username", "password")).name
-    end
+  def test_delete_portfolio_portfolio_does_not_exists_portfolio_not_removed
+    @portfolio_manager.add_portfolio(@portfolio2)
 
-    def test_DeletePortfolio_PortfolioDoesNotExists_PortfolioNotRemoved
-        @portfolioManager.AddPortfolio(@portfolio2)
+    @portfolio_manager.delete_portfolio(@portfolio)
 
-        @portfolioManager.DeletePortfolio(@portfolio)
-
-        assert_equal 1, @portfolioManager.GetNumPortfolios
-    end
+    assert_equal 1, @portfolio_manager.num_portfolios
+  end
 end

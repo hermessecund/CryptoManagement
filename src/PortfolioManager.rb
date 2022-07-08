@@ -1,30 +1,31 @@
-require_relative "Portfolio.rb"
+# frozen_string_literal: true
+
+require_relative 'Portfolio'
 
 class PortfolioManager
-    
-    def initialize()
-        @portfolios = Array.new
+  def initialize
+    @portfolios = []
+  end
+
+  def add_portfolio(portfolio)
+    @portfolios.push(portfolio)
+  end
+
+  def portfolio(portfolio, user)
+    portfolio = @portfolios.include?(portfolio) ? @portfolios.at(@portfolios.find_index(portfolio)) : nil
+
+    if(!portfolio.nil? && portfolio.user.userName != user.userName)
+      portfolio = nil
     end
 
-    def AddPortfolio(portfolio)
-        @portfolios.push(portfolio)
-    end
+    portfolio
+  end
 
-    def GetPortfolio(portfolio, user)
-        portfolio = @portfolios.include?(portfolio) ? @portfolios.at(@portfolios.find_index(portfolio)) : nil
+  def num_portfolios
+    @portfolios.length
+  end
 
-        if(portfolio != nil and portfolio.user.userName != user.userName)
-            portfolio = nil
-        end
-
-        return portfolio
-    end
-
-    def GetNumPortfolios
-        return @portfolios.length
-    end
-
-    def DeletePortfolio(portfolio)
-        @portfolios.delete(portfolio)
-    end
+  def delete_portfolio(portfolio)
+    @portfolios.delete(portfolio)
+  end
 end

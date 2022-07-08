@@ -1,85 +1,84 @@
-require_relative "test_helper"
-require_relative "../src/Portfolio.rb"
+# frozen_string_literal: true
+
+require_relative 'test_helper'
+require_relative '../src/Portfolio'
 
 class PortfolioTest < Minitest::Test
+  def setup
+    @portfolio = Portfolio.new('NameTest', User.new('username', 'password'))
+    @antonio_coin = Coin.new('antonio_coin', 'ANC')
+    @meme_coin = Coin.new('meme_coin', 'MMC')
+  end
 
-    def setup
+  def test_num_coins
+    assert_equal 0, @portfolio.num_coins
+  end
 
-        @portfolio = Portfolio.new("NameTest", User.new("username", "password"))
-        @antonioCoin = Coin.new("AntonioCoin", "ANC")
-        @memeCoin = Coin.new("memeCoin", "MMC")
-    end
+  def test_add_coin
+    @portfolio.add_coin(@antonio_coin)
 
-    def test_GetNumCoins
-        assert_equal 0, @portfolio.GetNumCoins
-    end
+    assert_equal 1, @portfolio.num_coins
+  end
 
-    def test_AddCoin
-        @portfolio.AddCoin(@antonioCoin)
-        
-        assert_equal 1, @portfolio.GetNumCoins
-    end
+  def test_coin_by_name_two_coins_in_portfolio_returns_requested_coin
+    @portfolio.add_coin(@meme_coin)
 
-    def test_GetCoinByName_TwoCoinsInPortfolio_ReturnsRequestedCoin
-        @portfolio.AddCoin(@memeCoin)
+    requested_coin = @portfolio.coin_by_name(@meme_coin.name)
 
-        requestedCoin = @portfolio.GetCoinByName(@memeCoin.name)
+    assert_equal 1, @portfolio.num_coins
+    assert_equal 'meme_coin', requested_coin.name
+    assert_equal 'MMC', requested_coin.abbreviation
+  end
 
-        assert_equal 1, @portfolio.GetNumCoins
-        assert_equal "memecoin", requestedCoin.name
-        assert_equal "MMC", requestedCoin.abbreviation
-    end
+  def test_coin_by_name_two_coins_in_portfolio_requested_coin_not_exists
+    requested_coin = @portfolio.coin_by_name('TEST')
 
-    def test_GetCoinByName_TwoCoinsInPortfolio_RequestedCoinNotExists
-        requestedCoin = @portfolio.GetCoinByName("TEST")
+    assert_nil requested_coin
+  end
 
-        assert_nil requestedCoin
-    end
+  def test_coin_two_coins_in_portfolio_requested_coin_exists
+    @portfolio.add_coin(@meme_coin)
+    @portfolio.add_coin(@antonio_coin)
 
-    def test_GetCoin_TwoCoinsInPortfolio_RequestedCoinExists
-        @portfolio.AddCoin(@memeCoin)
-        @portfolio.AddCoin(@antonioCoin)
+    requested_coin = @portfolio.coin(@meme_coin)
 
-        requestedCoin = @portfolio.GetCoin(@memeCoin)
-        
-        refute_nil requestedCoin
-        assert_equal "memecoin", requestedCoin.name
-        assert_equal "MMC", requestedCoin.abbreviation
-    end
+    refute_nil requested_coin
+    assert_equal 'meme_coin', requested_coin.name
+    assert_equal 'MMC', requested_coin.abbreviation
+  end
 
-    def test_GetCoin_OneCoinInPortfolio_RequestedCoinNotExists
-        @portfolio.AddCoin(@memeCoin)
+  def test_coin_one_coin_in_portfolio_requested_coin_not_exists
+    @portfolio.add_coin(@meme_coin)
 
-        requestedCoin = @portfolio.GetCoin(@antonioCoin)
-        
-        assert_nil requestedCoin
-    end
+    requested_coin = @portfolio.coin(@antonio_coin)
 
-    def test_DeleteCoin_TwoCoinsInPortfolio_DeletedOneCoin
-        @portfolio.AddCoin(@memeCoin)
-        @portfolio.AddCoin(@antonioCoin)
+    assert_nil requested_coin
+  end
 
-        deletedCoin = @portfolio.DeleteCoin(@memeCoin)
-        
-        assert_equal 1, @portfolio.GetNumCoins
-        assert_equal "memecoin", deletedCoin.name
-        assert_equal "MMC", deletedCoin.abbreviation
-    end
+  def test_delete_coin_two_coins_in_portfolio_deleted_one_coin
+    @portfolio.add_coin(@meme_coin)
+    @portfolio.add_coin(@antonio_coin)
 
-    def test_DeleteCoin_OneCoinInPortfolio_NoDeletedCoin
-        @portfolio.AddCoin(@antonioCoin)
+    deleted_coin = @portfolio.delete_coin(@meme_coin)
 
-        deletedCoin = @portfolio.DeleteCoin(@memeCoin)
-        
-        assert_nil deletedCoin
-    end
+    assert_equal 1, @portfolio.num_coins
+    assert_equal 'meme_coin', deleted_coin.name
+    assert_equal 'MMC', deleted_coin.abbreviation
+  end
 
-    def test_SetName_OneCoinInPortfolio_NameChanged
-        @portfolio.AddCoin(@memeCoin)
+  def test_delete_coin_one_coin_in_portfolio_no_deleted_coin
+    @portfolio.add_coin(@antonio_coin)
 
-        @portfolio.name = "PortFolioTest"
-        
-        assert_equal "PortFolioTest", @portfolio.name
-    end
+    deleted_coin = @portfolio.delete_coin(@meme_coin)
 
+    assert_nil deleted_coin
+  end
+
+  def test_set_name_one_coin_in_portfolio_name_changed
+    @portfolio.add_coin(@meme_coin)
+
+    @portfolio.name = 'PortFolioTest'
+
+    assert_equal 'PortFolioTest', @portfolio.name
+  end
 end
