@@ -4,6 +4,7 @@ GEM
     bcrypt (3.1.18)
     coingecko_ruby (0.4.2)
     docile (1.4.0)
+    json (2.6.2)
     minitest (5.15.0)
     rake (13.0.6)
     simplecov (0.21.2)
@@ -20,6 +21,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1)
   coingecko_ruby (~> 0.4.2)
+  json (~> 2.6)
   minitest (~> 5.15)
   rake (~> 13.0)
   simplecov (~> 0.21.2)

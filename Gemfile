@@ -15,3 +15,4 @@ gem "bcrypt", "~> 3.1"
 group :test do
   gem "simplecov", "~> 0.21.2"
 end
+gem "json", "~> 2.6"
