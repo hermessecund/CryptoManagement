@@ -44,5 +44,5 @@ end
 
 Rake::TestTask.new do |t|
   t.name = 'Dator'
-  t.test_files = FileList['test/DataAccess/DatorTest.rb']
+  t.test_files = FileList['test/DataAccess/Datortest.rb']
 end
